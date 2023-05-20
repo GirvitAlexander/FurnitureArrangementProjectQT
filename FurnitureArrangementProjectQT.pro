@@ -9,14 +9,28 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    conditionwidget.cpp \
+    furniture.cpp \
+    graphicwidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    parametrwidget.cpp \
+    room.cpp
 
 HEADERS += \
-    mainwindow.h
+    conditionwidget.h \
+    furniture.h \
+    graphicwidget.h \
+    mainwindow.h \
+    parametrwidget.h \
+    room.h \
+    typesfurnitures.h
 
 FORMS += \
-    mainwindow.ui
+    conditionwidget.ui \
+    graphicwidget.ui \
+    mainwindow.ui \
+    parametrwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

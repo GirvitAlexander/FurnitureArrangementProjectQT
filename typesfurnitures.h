@@ -1,0 +1,17 @@
+#ifndef TYPESFURNITURES_H
+#define TYPESFURNITURES_H
+
+enum TYPE_FURNITURE_WALL {
+    WINDOW = 0,
+    DOOR
+};
+
+enum TYPE_FURNITURE_ROOM {
+    CHAIR = 0,
+    TABLE,
+    CUPBOARD,
+    SOFA,
+    ARMCHAIR
+};
+
+#endif // TYPESFURNITURES_H

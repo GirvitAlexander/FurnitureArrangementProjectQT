@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ParametrWidget</class>
+ <widget class="QWidget" name="ParametrWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>207</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="mainText">
+     <property name="text">
+      <string>Параметры комнаты</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Выбор мебели для изменения параметров:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="selectFunitureComboBox">
+     <property name="currentText">
+      <string>Окно №1</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Окно №1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Стул №1</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="changeParamButton">
+     <property name="text">
+      <string>Изменить параметры</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="cupboardLabel">
+       <property name="text">
+        <string>Количество шкафов:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cupboardCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="chairLabel">
+       <property name="text">
+        <string>Количество стульев:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="chairCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="windowLabel">
+       <property name="text">
+        <string>Количество окон:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="windowCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="tableLabel">
+       <property name="text">
+        <string>Количество столов:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="tableCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QLabel" name="armChairLabel">
+       <property name="text">
+        <string>Количество кресел:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="armChairCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="sofaLabel">
+       <property name="text">
+        <string>Количество диванов:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="sofaCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="doorsLable">
+       <property name="text">
+        <string>Количество дверей:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="doorsCnt">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="addFurnitureButton">
+     <property name="text">
+      <string>Добавить мебель</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>1</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
