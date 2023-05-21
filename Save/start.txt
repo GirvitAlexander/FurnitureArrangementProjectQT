@@ -1,0 +1,10 @@
+width_room 800
+height_room 600
+width_window 150
+width_door 100
+cnt_window 2
+799 100 90
+600 599 0
+cnt_door 1
+1 100 0
+end_file

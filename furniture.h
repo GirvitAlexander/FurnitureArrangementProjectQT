@@ -16,8 +16,8 @@ class Furniture
 public:
     Furniture(QString _nameFurniture);
 
-    QPixmap getPicture();
-    QString getName();
+    QPixmap getPicture() const;
+    QString getName() const;
     virtual ~Furniture();
 
 protected:
@@ -28,10 +28,12 @@ protected:
 
 class FurnitureWall: public Furniture {
 public:
+    FurnitureWall() : Furniture("") {}
     FurnitureWall(QString nameFurniture, size_t width, TYPE_FURNITURE_WALL type);
     ~FurnitureWall();
 
-    size_t getSize();
+    TYPE_FURNITURE_WALL getType() const;
+    size_t getSize() const;
 
 private:
     void loadPicture() override;
@@ -42,10 +44,12 @@ private:
 
 class FurnitureRoom: public Furniture {
 public:
+    FurnitureRoom() : Furniture("") {}
     FurnitureRoom(QString nameFurniture, size_t width, size_t height, TYPE_FURNITURE_ROOM type);
     ~FurnitureRoom();
 
-    QPair<size_t, size_t> getSize();
+    QPair<size_t, size_t> getSize() const;
+    TYPE_FURNITURE_ROOM getType() const;
 
 private:
     TYPE_FURNITURE_ROOM type;

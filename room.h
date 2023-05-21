@@ -14,8 +14,12 @@
 using std::size_t;
 
 struct ParametrsRoom {
-    QVector<FurnitureWall> wallFurnitures;
-    QVector<FurnitureRoom> roomFurnitures;
+    ParametrsRoom(QMap<QString, FurnitureWall> wallFurnitures, QMap<QString, FurnitureRoom> roomFurnitures)
+        : wallFurnitures(wallFurnitures), roomFurnitures(roomFurnitures) {
+
+    }
+    QMap<QString, FurnitureWall> wallFurnitures;
+    QMap<QString, FurnitureRoom> roomFurnitures;
 };
 
 class Room
@@ -23,27 +27,42 @@ class Room
 public:
     Room();
 
-    void addRoomFurniture(QString name, size_t width, size_t height, TYPE_FURNITURE_ROOM);
-    void addWallFurniture(QString name, size_t height, TYPE_FURNITURE_WALL);
+    bool addRoomFurniture(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
+    bool addWallFurniture(QString name, size_t height, QPoint, int, TYPE_FURNITURE_WALL);
 
-    //void moveRoomFurniture(QString)
+    bool moveRoomFurniture(QString, QPoint);
+    bool moveWallFurniture(QString, QPoint);
 
-    void loadRoom(QString fileName);
-    void saveRoom(QString fileName);
+    bool rotateRoomFurniture(QString, int);
+    bool rotateWallFurniture(QString, int);
 
-    ParametrsRoom getParams();
+    bool loadRoom(QString fileName);
+    bool saveRoom(QString fileName);
+
+    bool hasName(QString) const;
+
+    ParametrsRoom getParams() const;
 
 private:
 
+    bool isIntersectAllRoom(QPoint center, int widht, int height, int angle, QString notInterName  = "") const;
+    bool isIntersectAllWall(QPoint center, int widht, int angle, QString notInterName = "") const;
+    bool isIntersectWallByName(QString name) const;
+    bool isIntersectRoomByName(QString name) const;
+
     void loadDefaultRoom();
+
     size_t height;
     size_t width;
+    size_t width_wall;
+
     QMap<QString, FurnitureWall> wallFurnitures;
     QMap<QString, QPoint> wallFurnituresCoords;
+    QMap<QString, int> rotateAngleWallFur;
 
     QMap<QString, FurnitureRoom> roomFurnitures;
     QMap<QString, QPoint> roomFurnituresCoords;
-
+    QMap<QString, int> rotateAngleRoomFur;
 };
 
 #endif // ROOM_H
