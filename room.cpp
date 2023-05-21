@@ -65,7 +65,7 @@ bool Room::moveRoomFurniture_h(QString name, QPoint newPoint) {
 }
 
 bool Room::moveWallFurniture_h(QString name, QPoint newPoint) {
-    if (wallFurnitures.contains(name) || isIntersectWallByName(name)) {
+    if (!wallFurnitures.contains(name) || isIntersectWallByName(name)) {
         return false;
     }
 
@@ -75,7 +75,7 @@ bool Room::moveWallFurniture_h(QString name, QPoint newPoint) {
 }
 
 bool Room::rotateRoomFurniture_h(QString name, int angle) {
-    if (roomFurnitures.contains(name) || isIntersectRoomByName(name)) {
+    if (!roomFurnitures.contains(name) || isIntersectRoomByName(name)) {
         return false;
     }
     rotateAngleRoomFur[name] = angle;
@@ -84,7 +84,7 @@ bool Room::rotateRoomFurniture_h(QString name, int angle) {
 }
 
 bool Room::rotateWallFurniture_h(QString name, int angle) {
-    if (wallFurnitures.contains(name) || isIntersectWallByName(name)) {
+    if (!wallFurnitures.contains(name) || isIntersectWallByName(name)) {
         return false;
     }
     rotateAngleWallFur[name] = angle;
@@ -194,6 +194,20 @@ void Room::loadRoom(QString fileName) {
         }
     }
     file.close();
+    emit changeParams(getParams());
+    return;
+}
+
+void Room::removeRoomFurniture(QString name) {
+    if (!roomFurnitures.contains(name)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Такой мебели не существует!!!"));
+    }
+    roomFurnitures.erase(roomFurnitures.find(name));
+
+    rotateAngleRoomFur.erase(rotateAngleRoomFur.find(name));
+
+    roomFurnituresCoords.erase(roomFurnituresCoords.find(name));
+
     emit changeParams(getParams());
     return;
 }

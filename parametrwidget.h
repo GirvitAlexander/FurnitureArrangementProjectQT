@@ -22,10 +22,14 @@ public slots:
     void clickedChangeParams();
     void addNewFurnitureRoom();
     void changeComboBox(QString);
+    void removeButton();
 
 signals:
     void addFurnitureRoom(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
     void changeFurniture(QString name);
+    void moveFur(QString nameElem, QPoint old_center);
+    void rotateFur(QString nameElem, int angle);
+    void removeFur(QString);
 
 private:
     Ui::ParametrWidget *ui;

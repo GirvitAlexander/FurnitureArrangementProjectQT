@@ -12,11 +12,23 @@ class changeRoomFurnitureDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit changeRoomFurnitureDialog(QWidget *parent = nullptr);
+    explicit changeRoomFurnitureDialog(QPoint center_old, int angle_old, QWidget *parent = nullptr);
     ~changeRoomFurnitureDialog();
+
+    int getAngle() {
+        return angle;
+    }
+
+    QPoint getCenter() {
+        return center;
+    }
 
 private:
     Ui::changeRoomFurnitureDialog *ui;
+    int angle;
+    QPoint center;
+protected:
+    void accept() override;
 };
 
 #endif // CHANGEROOMFURNITUREDIALOG_H

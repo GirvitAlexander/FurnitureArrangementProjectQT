@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>207</width>
-    <height>300</height>
+    <height>374</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,6 +55,13 @@
     <widget class="QPushButton" name="changeParamButton">
      <property name="text">
       <string>Изменить параметры</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="removeFurButton">
+     <property name="text">
+      <string>Удалить мебель</string>
      </property>
     </widget>
    </item>

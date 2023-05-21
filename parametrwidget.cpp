@@ -5,6 +5,7 @@
 
 #include "typesfurnitures.h"
 #include "addfurnitureroomdialog.h"
+#include "changeroomfurnituredialog.h"
 
 ParametrWidget::ParametrWidget(QWidget *parent) :
     QWidget(parent),
@@ -18,14 +19,51 @@ ParametrWidget::ParametrWidget(QWidget *parent) :
 
     connect(ui->selectFunitureComboBox, &QComboBox::currentTextChanged,
             this, &ParametrWidget::changeComboBox);
+
+    connect(ui->removeFurButton, &QPushButton::clicked,
+            this, &ParametrWidget::removeButton);
+}
+
+void ParametrWidget::removeButton() {
+    QString name = ui->selectFunitureComboBox->currentText();
+    if (name == "")
+        return;
+    emit removeFur(name);
 }
 
 void ParametrWidget::changeComboBox(QString name) {
-    if (name != "")
-        emit changeFurniture(name);
+    if (name == "")
+        return;
+    if (paramsRoom.roomFurnitures.contains(name)) {
+        ui->changeParamButton->setEnabled(true);
+        ui->removeFurButton->setEnabled(true);
+    } else {
+        ui->changeParamButton->setEnabled(false);
+        ui->removeFurButton->setEnabled(false);
+    }
+
+    emit changeFurniture(name);
 }
 
 void ParametrWidget::clickedChangeParams() {
+    QString nameElem = ui->selectFunitureComboBox->currentText();
+    if (paramsRoom.roomFurnitures.contains(nameElem)) {
+        auto old_center = paramsRoom.roomFurnituresCoords[nameElem];
+        auto old_angle = paramsRoom.rotateAngleRoomFur[nameElem];
+        changeRoomFurnitureDialog dialog (old_center, old_angle);
+
+        if (dialog.exec() == QDialog::Accepted) {
+            auto center = dialog.getCenter();
+            auto angle = dialog.getAngle();
+            if (old_center != center) {
+                emit moveFur(nameElem, center);
+            }
+
+            if (angle != old_angle) {
+                emit rotateFur(nameElem, angle);
+            }
+        }
+    }
 }
 
 void ParametrWidget::addNewFurnitureRoom() {

@@ -22,6 +22,15 @@ MainWindow::MainWindow(Room* room, QWidget *parent)
 
     connect(ui->parametrWidget, &ParametrWidget::changeFurniture,
             ui->graphicWidget, &GraphicWidget::drawBackSelect);
+
+    connect(ui->parametrWidget, &ParametrWidget::moveFur,
+            room, &Room::moveRoomFurniture);
+
+    connect(ui->parametrWidget, &ParametrWidget::rotateFur,
+            room, &Room::rotateRoomFurniture);
+
+    connect(ui->parametrWidget, &ParametrWidget::removeFur,
+            room, &Room::removeRoomFurniture);
 }
 
 MainWindow::~MainWindow()

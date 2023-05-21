@@ -13,7 +13,6 @@ DEFINES += PRO_FILE_PWD=$$sprintf("\"\\\"%1\\\"\"", $$_PRO_FILE_PWD_)
 SOURCES += \
     addfurnitureroomdialog.cpp \
     changeroomfurnituredialog.cpp \
-    changewallfurnituredialog.cpp \
     conditionwidget.cpp \
     furniture.cpp \
     graphicwidget.cpp \
@@ -25,7 +24,6 @@ SOURCES += \
 HEADERS += \
     addfurnitureroomdialog.h \
     changeroomfurnituredialog.h \
-    changewallfurnituredialog.h \
     conditionwidget.h \
     furniture.h \
     graphicwidget.h \
@@ -37,7 +35,6 @@ HEADERS += \
 FORMS += \
     addfurnitureroomdialog.ui \
     changeroomfurnituredialog.ui \
-    changewallfurnituredialog.ui \
     conditionwidget.ui \
     graphicwidget.ui \
     mainwindow.ui \

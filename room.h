@@ -48,6 +48,8 @@ public slots:
     void moveRoomFurniture(QString, QPoint);
     void moveWallFurniture(QString, QPoint);
 
+    void removeRoomFurniture(QString);
+
     void rotateRoomFurniture(QString, int);
     void rotateWallFurniture(QString, int);
 
