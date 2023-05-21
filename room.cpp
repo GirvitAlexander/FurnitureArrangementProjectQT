@@ -8,9 +8,6 @@
 #include "typesfurnitures.h"
 
 namespace {
-    struct Point {
-        double x, y;
-    };
 
     QVector<Point> turnRectangle(QPoint center, int widht, int height, int angle) {
         QVector<Point> rect = { {(double)-widht / 2, (double)-height / 2},
@@ -124,6 +121,10 @@ bool Room::loadRoom(QString fileName) {
 
 
         if (object_type=="wall"){
+            wallFurnitures.clear();
+            wallFurnituresCoords.clear();
+            rotateAngleWallFur.clear();
+
             FurnitureWall furniture_wall(name, width, static_cast<TYPE_FURNITURE_WALL>(object_type2));
             wallFurnitures.insert(name, furniture_wall);
 
@@ -134,6 +135,11 @@ bool Room::loadRoom(QString fileName) {
         }
         else if (object_type=="room"){
             height = in.readLine().trimmed().toInt();
+
+            roomFurnitures.clear();
+            roomFurnituresCoords.clear();
+            rotateAngleRoomFur.clear();
+
             FurnitureRoom furniture_room(name, width, height, static_cast<TYPE_FURNITURE_ROOM>(object_type2));
             roomFurnitures.insert(name, furniture_room);
 
@@ -190,7 +196,9 @@ bool Room::hasName(QString name) const {
 }
 
 ParametrsRoom Room::getParams() const{
-    return ParametrsRoom(wallFurnitures, roomFurnitures);
+    return {wallFurnitures, wallFurnituresCoords, rotateAngleWallFur,
+            roomFurnitures, roomFurnituresCoords, rotateAngleRoomFur,
+            height, width, width_wall};
 }
 
 void Room::loadDefaultRoom() {
@@ -218,6 +226,8 @@ void Room::loadDefaultRoom() {
            width_window = num;
        } else if (elem_name == "width_door") {
            width_door = num;
+       } else if (elem_name == "width_wall") {
+           width_wall = num;
        } else if (elem_name == "cnt_window") {
            for (size_t i = 0; i < num; ++i) {
                size_t x, y;
@@ -238,53 +248,83 @@ void Room::loadDefaultRoom() {
    file.close();
 }
 
-bool Room::isIntersectAllRoom(QPoint center, int widht, int height, int angle, QString notInterName) const {
-    QVector<Point> rect = turnRectangle(center, widht, height, angle);
+bool Room::checkIntersection(const QVector<Point>& rect1Points, const QVector<Point>& rect2Points) const{
+    for (int i = 0; i < 4; ++i) {
+        Point axis;
+        if (i < 3) {
+            axis = {rect1Points[i + 1].x - rect1Points[i].x, rect1Points[i + 1].y - rect1Points[i].y};
+        } else {
+            axis = {rect1Points[0].x - rect1Points[3].x, rect1Points[0].y - rect1Points[3].y};
+        }
 
-    if (rect[0].x < width_wall || rect[1].x < width_wall ||
-        rect[2].x < width_wall || rect[3].x < width_wall ||
-        rect[0].y < width_wall || rect[1].y < width_wall ||
-        rect[2].y < width_wall || rect[3].y < width_wall ||
-        rect[0].x > this->width - width_wall || rect[1].x > this->width - width_wall ||
-        rect[2].x > this->width - width_wall || rect[3].x > this->width - width_wall ||
-        rect[0].y > this->height - width_wall || rect[1].y > this->height - width_wall ||
-        rect[2].y > this->height - width_wall || rect[3].y > this->height - width_wall) {
-        return false;
+        double axisLength = std::sqrt(axis.x * axis.x + axis.y * axis.y);
+        axis.x /= axisLength;
+        axis.y /= axisLength;
+
+        double minProjection1 = rect1Points[0].x * axis.x + rect1Points[0].y * axis.y;
+        double maxProjection1 = minProjection1;
+        for (const auto& point : rect1Points) {
+            double projection = point.x * axis.x + point.y * axis.y;
+            minProjection1 = std::min(minProjection1, projection);
+            maxProjection1 = std::max(maxProjection1, projection);
+        }
+
+        double minProjection2 = rect2Points[0].x * axis.x + rect2Points[0].y * axis.y;
+        double maxProjection2 = minProjection2;
+        for (const auto& point : rect2Points) {
+            double projection = point.x * axis.x + point.y * axis.y;
+            minProjection2 = std::min(minProjection2, projection);
+            maxProjection2 = std::max(maxProjection2, projection);
+        }
+
+        if (maxProjection1 < minProjection2 || maxProjection2 < minProjection1) {
+
+            return false;
+        }
     }
 
-    auto x_min_1 = std::min({rect[0].x, rect[1].x, rect[2].x, rect[3].x});
-    auto x_max_1 = std::max({rect[0].x, rect[1].x, rect[2].x, rect[3].x});
-    auto y_min_1 = std::min({rect[0].y, rect[1].y, rect[2].y, rect[3].y});
-    auto y_max_1 = std::max({rect[0].y, rect[1].y, rect[2].y, rect[3].y});
+    return true;
+}
 
+
+bool Room::isIntersectAllRoom(QPoint center, int widht, int height, int angle, QString notInterName) const {
+
+
+    QVector<Point> rect1 = turnRectangle(center, widht, height, angle);
+
+
+    if (rect1[0].x < width_wall || rect1[1].x < width_wall ||
+        rect1[2].x < width_wall || rect1[3].x < width_wall ||
+        rect1[0].y < width_wall || rect1[1].y < width_wall ||
+        rect1[2].y < width_wall || rect1[3].y < width_wall ||
+        rect1[0].x > this->width - width_wall || rect1[1].x > this->width - width_wall ||
+        rect1[2].x > this->width - width_wall || rect1[3].x > this->width - width_wall ||
+        rect1[0].y > this->height - width_wall || rect1[1].y > this->height - width_wall ||
+        rect1[2].y > this->height - width_wall || rect1[3].y > this->height - width_wall) {
+        return true;
+    }
     for (const auto& elem: roomFurnitures) {
         auto size = elem.getSize();
         auto name_elem = elem.getName();
+        qDebug() << name_elem;
         if (notInterName == name_elem) {
             continue;
         }
-        QVector<Point> rect_elem = turnRectangle(wallFurnituresCoords[name_elem], size.first, size.second, rotateAngleWallFur[name_elem]);
 
-        auto x_min_2 = std::min({rect_elem[0].x, rect_elem[1].x, rect_elem[2].x, rect_elem[3].x});
-        auto x_max_2 = std::max({rect_elem[0].x, rect_elem[1].x, rect_elem[2].x, rect_elem[3].x});
-        auto y_min_2 = std::min({rect_elem[0].y, rect_elem[1].y, rect_elem[2].y, rect_elem[3].y});
-        auto y_max_2 = std::max({rect_elem[0].y, rect_elem[1].y, rect_elem[2].y, rect_elem[3].y});
-
-        if (x_min_1 <= x_max_2 && x_max_1 >= x_min_2 && y_min_1 <= y_max_2 && y_max_1 >= y_min_2) {
-            return true;
+        QVector<Point> rect2 = turnRectangle(roomFurnituresCoords[name_elem], size.first, size.second, rotateAngleRoomFur[name_elem]);
+        if (checkIntersection(rect1, rect2)) {
+            return true; // Прямоугольники пересекаются
         }
     }
-
     return false;
+
+
 }
 
-bool Room::isIntersectAllWall(QPoint center, int widht, int angle, QString notInterName) const {
-    QVector<Point> rect = turnRectangle(center, widht, width_wall, angle);
 
-    auto x_min_1 = std::min({rect[0].x, rect[1].x, rect[2].x, rect[3].x});
-    auto x_max_1 = std::max({rect[0].x, rect[1].x, rect[2].x, rect[3].x});
-    auto y_min_1 = std::min({rect[0].y, rect[1].y, rect[2].y, rect[3].y});
-    auto y_max_1 = std::max({rect[0].y, rect[1].y, rect[2].y, rect[3].y});
+bool Room::isIntersectAllWall(QPoint center, int widht, int angle, QString notInterName) const {
+    QVector<Point> rect1 = turnRectangle(center, widht, width_wall, angle);
+
 
     for (const auto& elem: wallFurnitures) {
         auto size = elem.getSize();
@@ -292,14 +332,9 @@ bool Room::isIntersectAllWall(QPoint center, int widht, int angle, QString notIn
         if (notInterName == name_elem) {
             continue;
         }
-        QVector<Point> rect_elem = turnRectangle(wallFurnituresCoords[name_elem], size, width_wall, rotateAngleWallFur[name_elem]);
+        QVector<Point> rect2 = turnRectangle(wallFurnituresCoords[name_elem], size, width_wall, rotateAngleWallFur[name_elem]);
 
-        auto x_min_2 = std::min({rect_elem[0].x, rect_elem[1].x, rect_elem[2].x, rect_elem[3].x});
-        auto x_max_2 = std::max({rect_elem[0].x, rect_elem[1].x, rect_elem[2].x, rect_elem[3].x});
-        auto y_min_2 = std::min({rect_elem[0].y, rect_elem[1].y, rect_elem[2].y, rect_elem[3].y});
-        auto y_max_2 = std::max({rect_elem[0].y, rect_elem[1].y, rect_elem[2].y, rect_elem[3].y});
-
-        if (x_min_1 <= x_max_2 && x_max_1 >= x_min_2 && y_min_1 <= y_max_2 && y_max_1 >= y_min_2) {
+        if (checkIntersection(rect1, rect2)) {
             return true;
         }
     }

@@ -29,10 +29,10 @@ TYPE_FURNITURE_WALL FurnitureWall::getType() const{
 void FurnitureWall::loadPicture() {
     switch (type) {
     case WINDOW:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Window.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Window.png");
         break;
     case DOOR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Door.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Door.png");
         break;
     }
 }
@@ -58,19 +58,19 @@ TYPE_FURNITURE_ROOM FurnitureRoom::getType() const{
 void FurnitureRoom::loadPicture() {
     switch (type) {
     case CHAIR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Chair.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Chair.png");
         break;
     case TABLE:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Table.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Table.png");
         break;
     case SOFA:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Sofa.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Sofa.png");
         break;
     case ARMCHAIR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Armchair.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Armchair.png");
         break;
     case CUPBOARD:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Cupboard.png");
+        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Cupboard.png");
         break;
     }
 }
