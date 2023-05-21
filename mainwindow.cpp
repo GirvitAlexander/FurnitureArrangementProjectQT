@@ -14,11 +14,14 @@ MainWindow::MainWindow(Room* room, QWidget *parent)
                 room, &Room::saveRoom);
     connect(room, &Room::changeParams,
             ui->graphicWidget, &GraphicWidget::getParams);
-
+    connect(room, &Room::changeParams,
+            ui->parametrWidget, &ParametrWidget::getParams);
 
     connect(ui->parametrWidget, &ParametrWidget::addFurnitureRoom,
             room, &Room::addRoomFurniture);
 
+    connect(ui->parametrWidget, &ParametrWidget::changeFurniture,
+            ui->graphicWidget, &GraphicWidget::drawBackSelect);
 }
 
 MainWindow::~MainWindow()

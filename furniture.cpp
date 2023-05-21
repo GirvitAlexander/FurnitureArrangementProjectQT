@@ -1,3 +1,5 @@
+#include <QDir>
+
 #include "furniture.h"
 
 Furniture::Furniture(QString nameFurniture)
@@ -27,12 +29,17 @@ TYPE_FURNITURE_WALL FurnitureWall::getType() const{
 }
 
 void FurnitureWall::loadPicture() {
+    QString saveFolder = "Signs";
+    QString currentPath = PRO_FILE_PWD;
+    QString savePath = QDir::toNativeSeparators(currentPath + QDir::separator() + saveFolder + QDir::separator());
+    QString fileName = QDir::toNativeSeparators(savePath);
+
     switch (type) {
     case WINDOW:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Window.png");
+        picture = QPixmap(fileName + "Window.png");
         break;
     case DOOR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Door.png");
+        picture = QPixmap(fileName + "Door.png");
         break;
     }
 }
@@ -56,21 +63,28 @@ TYPE_FURNITURE_ROOM FurnitureRoom::getType() const{
 };
 
 void FurnitureRoom::loadPicture() {
+    QString saveFolder = "Signs";
+    QString currentPath = PRO_FILE_PWD;
+    QString savePath = QDir::toNativeSeparators(currentPath + QDir::separator() + saveFolder + QDir::separator());
+    QString fileName = QDir::toNativeSeparators(savePath);
+
     switch (type) {
+
     case CHAIR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Chair.png");
+
+        picture = QPixmap(fileName + "Chair.png");
         break;
     case TABLE:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Table.png");
+        picture = QPixmap(fileName + "Table.png");
         break;
     case SOFA:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Sofa.png");
+        picture = QPixmap(fileName + "Sofa.png");
         break;
     case ARMCHAIR:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Armchair.png");
+        picture = QPixmap(fileName + "Armchair.png");
         break;
     case CUPBOARD:
-        picture = QPixmap("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Signs\\Cupboard.png");
+        picture = QPixmap(fileName + "Cupboard.png");
         break;
     }
 }

@@ -21,8 +21,12 @@ public slots:
     void getParams(ParametrsRoom pr);
     void clickedChangeParams();
     void addNewFurnitureRoom();
+    void changeComboBox(QString);
+
 signals:
     void addFurnitureRoom(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
+    void changeFurniture(QString name);
+
 private:
     Ui::ParametrWidget *ui;
     ParametrsRoom paramsRoom;

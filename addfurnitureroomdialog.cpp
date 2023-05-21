@@ -10,11 +10,11 @@ addFurnitureRoomDialog::addFurnitureRoomDialog(QWidget *parent) :
     ui(new Ui::addFurnitureRoomDialog) {
 
     ui->setupUi(this);
-    ui->typeComboBox->addItem("Стул");
-    ui->typeComboBox->addItem("Стол");
-    ui->typeComboBox->addItem("Кресло");
-    ui->typeComboBox->addItem("Диван");
-    ui->typeComboBox->addItem("Шкаф");
+    ui->typeComboBox->addItem(QStringLiteral("Стул"  ));
+    ui->typeComboBox->addItem(QStringLiteral("Стол"  ));
+    ui->typeComboBox->addItem(QStringLiteral("Кресло"));
+    ui->typeComboBox->addItem(QStringLiteral("Диван" ));
+    ui->typeComboBox->addItem(QStringLiteral("Шкаф"  ));
 
 }
 

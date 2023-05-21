@@ -15,10 +15,17 @@ ParametrWidget::ParametrWidget(QWidget *parent) :
 
     connect(ui->addFurnitureButton, &QPushButton::clicked,
             this, &ParametrWidget::addNewFurnitureRoom);
+
+    connect(ui->selectFunitureComboBox, &QComboBox::currentTextChanged,
+            this, &ParametrWidget::changeComboBox);
+}
+
+void ParametrWidget::changeComboBox(QString name) {
+    if (name != "")
+        emit changeFurniture(name);
 }
 
 void ParametrWidget::clickedChangeParams() {
-
 }
 
 void ParametrWidget::addNewFurnitureRoom() {
