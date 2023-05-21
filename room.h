@@ -38,18 +38,18 @@ class Room: public QObject
 public:
     Room();
 
-    bool addRoomFurniture(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
-    bool addWallFurniture(QString name, size_t height, QPoint, int, TYPE_FURNITURE_WALL);
-
-    bool moveRoomFurniture(QString, QPoint);
-    bool moveWallFurniture(QString, QPoint);
-
-    bool rotateRoomFurniture(QString, int);
-    bool rotateWallFurniture(QString, int);
-
 public slots:
     void loadRoom(QString fileName);
     void saveRoom(QString fileName);
+
+    void addRoomFurniture(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
+    void addWallFurniture(QString name, size_t height, QPoint, int, TYPE_FURNITURE_WALL);
+
+    void moveRoomFurniture(QString, QPoint);
+    void moveWallFurniture(QString, QPoint);
+
+    void rotateRoomFurniture(QString, int);
+    void rotateWallFurniture(QString, int);
 
 public:
     bool hasName(QString) const;
@@ -60,6 +60,14 @@ signals:
     void changeParams(ParametrsRoom params);
 
 private:
+    bool addRoomFurniture_h(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
+    bool addWallFurniture_h(QString name, size_t height, QPoint, int, TYPE_FURNITURE_WALL);
+
+    bool moveRoomFurniture_h(QString, QPoint);
+    bool moveWallFurniture_h(QString, QPoint);
+
+    bool rotateRoomFurniture_h(QString, int);
+    bool rotateWallFurniture_h(QString, int);
 
     bool isIntersectAllRoom(QPoint center, int widht, int height, int angle, QString notInterName  = "") const;
     bool isIntersectAllWall(QPoint center, int widht, int angle, QString notInterName = "") const;

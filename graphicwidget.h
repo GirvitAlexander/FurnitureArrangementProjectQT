@@ -23,7 +23,6 @@ public slots:
 
 private:
     Ui::GraphicWidget *ui;
-    ParametrsRoom paramsRoom;
 
     QMap<QString, QLabel *> furnitures;
 

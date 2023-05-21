@@ -9,15 +9,17 @@ GraphicWidget::GraphicWidget(QWidget *parent) :
     ui(new Ui::GraphicWidget) {
 
     ui->setupUi(this);
-
 }
 
 GraphicWidget::~GraphicWidget() {
     delete ui;
+    for (auto& elem: furnitures) {
+        delete elem;
+    }
+    furnitures.clear();
 }
 
-void GraphicWidget::getParams(ParametrsRoom pr) {
-    paramsRoom = pr;
+void GraphicWidget::getParams(ParametrsRoom paramsRoom) {
     for (auto& elem: furnitures) {
         delete elem;
     }
@@ -28,6 +30,9 @@ void GraphicWidget::getParams(ParametrsRoom pr) {
         auto picture = paramsRoom.roomFurnitures[elem].getPicture();
         auto angle = paramsRoom.rotateAngleRoomFur[elem];
         auto center = paramsRoom.roomFurnituresCoords[elem];
+
+        furnitures[elem] = new QLabel(this);
+        furnitures[elem]->setObjectName(elem);
 
         QPixmap scale = picture.scaled(QSize(size.first, size.second));
         QPixmap rotate = scale.transformed(QTransform().rotate(angle));

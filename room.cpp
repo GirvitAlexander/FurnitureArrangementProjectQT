@@ -3,6 +3,8 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QDir>
+#include <QMessageBox>
 
 #include "room.h"
 #include "typesfurnitures.h"
@@ -29,7 +31,7 @@ Room::Room() {
     loadDefaultRoom();
 }
 
-bool Room::addRoomFurniture(QString name, size_t width, size_t height, QPoint point, int angle, TYPE_FURNITURE_ROOM type) {
+bool Room::addRoomFurniture_h(QString name, size_t width, size_t height, QPoint point, int angle, TYPE_FURNITURE_ROOM type) {
     if (hasName(name) || isIntersectAllRoom(point, width, height, angle)) {
         return false;
     }
@@ -38,50 +40,92 @@ bool Room::addRoomFurniture(QString name, size_t width, size_t height, QPoint po
 
     roomFurnituresCoords.insert(name, point);
     rotateAngleRoomFur.insert(name, angle);
+    emit changeParams(getParams());
     return true;
 }
 
-bool Room::addWallFurniture(QString name, size_t width, QPoint point, int angle, TYPE_FURNITURE_WALL type) {
+bool Room::addWallFurniture_h(QString name, size_t width, QPoint point, int angle, TYPE_FURNITURE_WALL type) {
     if (hasName(name) || isIntersectAllWall(point, width, angle)) {
         return false;
     }
     wallFurnitures.insert(name, FurnitureWall(name, width, type));
     wallFurnituresCoords.insert(name, point);
     rotateAngleWallFur.insert(name, angle);
+    emit changeParams(getParams());
     return true;
 }
 
-bool Room::moveRoomFurniture(QString name, QPoint newPoint) {
+bool Room::moveRoomFurniture_h(QString name, QPoint newPoint) {
     if (!roomFurnitures.contains(name) || isIntersectRoomByName(name)) {
         return false;
     }
     roomFurnituresCoords[name] = newPoint;
+    emit changeParams(getParams());
     return true;
 }
 
-bool Room::moveWallFurniture(QString name, QPoint newPoint) {
+bool Room::moveWallFurniture_h(QString name, QPoint newPoint) {
     if (wallFurnitures.contains(name) || isIntersectWallByName(name)) {
         return false;
     }
 
     wallFurnituresCoords[name] = newPoint;
+    emit changeParams(getParams());
     return true;
 }
 
-bool Room::rotateRoomFurniture(QString name, int angle) {
+bool Room::rotateRoomFurniture_h(QString name, int angle) {
     if (roomFurnitures.contains(name) || isIntersectRoomByName(name)) {
         return false;
     }
     rotateAngleRoomFur[name] = angle;
+    emit changeParams(getParams());
     return true;
 }
 
-bool Room::rotateWallFurniture(QString name, int angle) {
+bool Room::rotateWallFurniture_h(QString name, int angle) {
     if (wallFurnitures.contains(name) || isIntersectWallByName(name)) {
         return false;
     }
     rotateAngleWallFur[name] = angle;
+    emit changeParams(getParams());
     return true;
+}
+
+void Room::addRoomFurniture(QString name, size_t width, size_t height, QPoint point, int angle, TYPE_FURNITURE_ROOM type) {
+    if (!addRoomFurniture_h( name, width, height, point, angle, type)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Имя уже существует или произошло пересечение!!!"));
+    }
+}
+
+void Room::addWallFurniture(QString name, size_t width, QPoint point, int angle, TYPE_FURNITURE_WALL type) {
+    if (!addWallFurniture_h( name, width, point, angle, type)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Имя уже существует или произошло пересечение!!!"));
+    }
+}
+
+void Room::moveRoomFurniture(QString name, QPoint newPoint) {
+    if (!moveRoomFurniture_h(name, newPoint)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Неверное имя или произошло пересечение!!!"));
+    }
+}
+
+void Room::moveWallFurniture(QString name, QPoint newPoint) {
+    if (!moveWallFurniture_h(name, newPoint)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Неверное имя или произошло пересечение!!!"));
+    }
+}
+
+void Room::rotateRoomFurniture(QString name, int angle) {
+    if (!rotateRoomFurniture_h(name, angle)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Неверное имя или произошло пересечение!!!"));
+    }
+}
+
+void Room::rotateWallFurniture(QString name, int angle) {
+    if (!rotateWallFurniture_h(name, angle)) {
+        QMessageBox::warning(nullptr, QStringLiteral("ОШИБКА"), QStringLiteral("Неверное имя или произошло пересечение!!!"));
+    }
 }
 
 void Room::loadRoom(QString fileName) {
@@ -158,7 +202,7 @@ void Room::saveRoom(QString fileName){
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Can`t open file loadRoom()!";
+        qDebug() << "Can`t open file saveRoom()!";
         return;
     }
     QTextStream out(&file);
@@ -204,7 +248,12 @@ ParametrsRoom Room::getParams() const{
 }
 
 void Room::loadDefaultRoom() {
-   QFile file("D:\\QT\\Kursach\\MAIN\\FurnitureArrangementProjectQT\\Save\\start.txt");
+    QString load_folder = "start.txt";
+    QString saveFolder = "Save";
+    QString currentPath = PRO_FILE_PWD;
+    QString savePath = QDir::toNativeSeparators(currentPath + QDir::separator() + saveFolder + QDir::separator());
+    QString fileName = QDir::toNativeSeparators(savePath + load_folder);
+    QFile file(fileName);
 
    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
    {

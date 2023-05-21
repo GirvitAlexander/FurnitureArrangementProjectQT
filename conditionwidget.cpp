@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QDir>
 
 ConditionWidget::ConditionWidget(QWidget *parent) :
     QWidget(parent),
@@ -26,7 +27,12 @@ void ConditionWidget::clickedSaveButton() {
     if (!ok || text.isEmpty()) {
         return;
     }
-    fileName = "D:/QT/Kursach/MAIN/FurnitureArrangementProjectQT/Save/" + text;
+
+    QString saveFolder = "Save";
+    QString currentPath = PRO_FILE_PWD;
+    QString savePath = QDir::toNativeSeparators(currentPath + QDir::separator() + saveFolder + QDir::separator());
+    fileName = QDir::toNativeSeparators(savePath + text);
+
     emit getSaveFile(fileName);
 }
 
@@ -45,7 +51,6 @@ void ConditionWidget::clickedLoadButton() {
 }
 
 
-ConditionWidget::~ConditionWidget()
-{
+ConditionWidget::~ConditionWidget() {
     delete ui;
 }

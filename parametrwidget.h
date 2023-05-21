@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "room.h"
+
 namespace Ui {
     class ParametrWidget;
 }
@@ -15,8 +17,16 @@ public:
     explicit ParametrWidget(QWidget *parent = nullptr);
     ~ParametrWidget();
 
+public slots:
+    void getParams(ParametrsRoom pr);
+    void clickedChangeParams();
+    void addNewFurnitureRoom();
+signals:
+    void addFurnitureRoom(QString name, size_t width, size_t height, QPoint, int, TYPE_FURNITURE_ROOM);
 private:
     Ui::ParametrWidget *ui;
+    ParametrsRoom paramsRoom;
+
 };
 
 #endif // PARAMETRWIDGET_H
