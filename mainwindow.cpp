@@ -7,6 +7,12 @@ MainWindow::MainWindow(Room* room, QWidget *parent)
 {
     ui->setupUi(this);
     ui->graphicWidget->getParams(room->getParams());
+    connect(ui->conditoinWidget, &ConditionWidget::getLoadFile,
+                room, &Room::loadRoom);
+    connect(ui->conditoinWidget, &ConditionWidget::getSaveFile,
+                room, &Room::saveRoom);
+    connect(room, &Room::changeParams,
+            ui->graphicWidget, &GraphicWidget::getParams);
 }
 
 MainWindow::~MainWindow()

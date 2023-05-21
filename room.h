@@ -47,13 +47,16 @@ public:
     bool rotateRoomFurniture(QString, int);
     bool rotateWallFurniture(QString, int);
 
-    bool loadRoom(QString fileName);
-    bool saveRoom(QString fileName);
+public slots:
+    void loadRoom(QString fileName);
+    void saveRoom(QString fileName);
 
+public:
     bool hasName(QString) const;
 
     ParametrsRoom getParams() const;
 
+signals:
     void changeParams(ParametrsRoom params);
 
 private:

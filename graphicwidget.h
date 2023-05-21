@@ -17,7 +17,10 @@ class GraphicWidget : public QWidget
 public:
     explicit GraphicWidget(QWidget *parent = nullptr);
     ~GraphicWidget();
+
+public slots:
     void getParams(ParametrsRoom pr);
+
 private:
     Ui::GraphicWidget *ui;
     ParametrsRoom paramsRoom;

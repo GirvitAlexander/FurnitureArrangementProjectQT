@@ -14,6 +14,14 @@ class ConditionWidget : public QWidget
 public:
     explicit ConditionWidget(QWidget *parent = nullptr);
     ~ConditionWidget();
+public slots:
+
+    void clickedSaveButton();
+    void clickedLoadButton();
+
+signals:
+    void getSaveFile(QString);
+    void getLoadFile(QString);
 
 private:
     Ui::ConditionWidget *ui;

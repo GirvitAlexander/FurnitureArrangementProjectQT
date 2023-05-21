@@ -84,13 +84,14 @@ bool Room::rotateWallFurniture(QString name, int angle) {
     return true;
 }
 
-bool Room::loadRoom(QString fileName) {
+void Room::loadRoom(QString fileName) {
 
     QFile file(fileName);
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        return false;
+        qDebug() << "Can`t open file loadRoom()!";
+        return;
     }
 
     QTextStream in(&file);
@@ -98,6 +99,13 @@ bool Room::loadRoom(QString fileName) {
     QString countStr = in.readLine();
     int count = countStr.toInt();
 
+    wallFurnitures.clear();
+    wallFurnituresCoords.clear();
+    rotateAngleWallFur.clear();
+
+    roomFurnitures.clear();
+    roomFurnituresCoords.clear();
+    rotateAngleRoomFur.clear();
 
     for (int i = 0; i < count; ++i) {
         in.readLine().trimmed();
@@ -121,10 +129,6 @@ bool Room::loadRoom(QString fileName) {
 
 
         if (object_type=="wall"){
-            wallFurnitures.clear();
-            wallFurnituresCoords.clear();
-            rotateAngleWallFur.clear();
-
             FurnitureWall furniture_wall(name, width, static_cast<TYPE_FURNITURE_WALL>(object_type2));
             wallFurnitures.insert(name, furniture_wall);
 
@@ -136,10 +140,6 @@ bool Room::loadRoom(QString fileName) {
         else if (object_type=="room"){
             height = in.readLine().trimmed().toInt();
 
-            roomFurnitures.clear();
-            roomFurnituresCoords.clear();
-            rotateAngleRoomFur.clear();
-
             FurnitureRoom furniture_room(name, width, height, static_cast<TYPE_FURNITURE_ROOM>(object_type2));
             roomFurnitures.insert(name, furniture_room);
 
@@ -150,14 +150,16 @@ bool Room::loadRoom(QString fileName) {
         }
     }
     file.close();
-    return true;
+    emit changeParams(getParams());
+    return;
 }
 
-bool Room::saveRoom(QString fileName){
+void Room::saveRoom(QString fileName){
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        return false;
+        qDebug() << "Can`t open file loadRoom()!";
+        return;
     }
     QTextStream out(&file);
 
@@ -187,7 +189,7 @@ bool Room::saveRoom(QString fileName){
         out << object_type.getSize().second << Qt::endl << Qt::endl;
     }
 
-    return true;
+    return;
 }
 
 

@@ -29,11 +29,14 @@ void GraphicWidget::getParams(ParametrsRoom pr) {
         auto angle = paramsRoom.rotateAngleRoomFur[elem];
         auto center = paramsRoom.roomFurnituresCoords[elem];
 
-        furnitures[elem] = new QLabel();
-        furnitures[elem]->setText(elem);
+        QPixmap scale = picture.scaled(QSize(size.first, size.second));
+        QPixmap rotate = scale.transformed(QTransform().rotate(angle));
 
-        furnitures[elem]->setPixmap(picture.scaled(QSize(size.first, size.second)).transformed(QTransform().rotate(angle)));
-        furnitures[elem]->move(center);
+        furnitures[elem]->setPixmap(rotate);
+        furnitures[elem]->setGeometry(center.x() - size.first / 2, paramsRoom.height - (center.y() + size.second / 2), rotate.width(), rotate.height());
+
+        furnitures[elem]->show();
+        qDebug() << elem << furnitures[elem]->geometry();
     }
 
     keys = paramsRoom.wallFurnitures.keys();
@@ -49,7 +52,7 @@ void GraphicWidget::getParams(ParametrsRoom pr) {
         QPixmap rotate = scale.transformed(QTransform().rotate(angle));
 
         furnitures[elem]->setPixmap(rotate);
-        furnitures[elem]->setGeometry(0, 0, rotate.width(), rotate.height());
+        furnitures[elem]->setGeometry(center.x() - rotate.width() / 2, paramsRoom.height - (center.y() + rotate.height() / 2), rotate.width(), rotate.height());
 
         furnitures[elem]->show();
         qDebug() << elem << furnitures[elem]->geometry();
